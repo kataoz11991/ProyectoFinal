@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-05-2021 a las 16:02:43
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.4.9
+-- Tiempo de generación: 24-03-2023 a las 06:03:33
+-- Versión del servidor: 10.4.27-MariaDB
+-- Versión de PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `cliente` (
   `idcliente` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `direccion` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `direccion` varchar(200) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `estado` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -41,8 +41,11 @@ CREATE TABLE `cliente` (
 --
 
 INSERT INTO `cliente` (`idcliente`, `nombre`, `telefono`, `direccion`, `usuario_id`, `estado`) VALUES
-(1, 'Público en General', '8296826298', 'S/D', 1, 1),
-(2, 'Angel sifuentes flores', '2147483647', 'Lima - Huari', 1, 1);
+(1, 'Maria jose', '8296826298', 'S/D', 1, 1),
+(2, 'Pedro luis', '2147483647', 'La Ceiba', 1, 1),
+(4, 'Roberto', '33589304', 'Col. Melgar', 1, 1),
+(5, 'Gladis', '9830384', 'Barrio Danto', 1, 1),
+(6, 'Gabriel', '3493043', 'Barrio Mejia', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -52,10 +55,10 @@ INSERT INTO `cliente` (`idcliente`, `nombre`, `telefono`, `direccion`, `usuario_
 
 CREATE TABLE `configuracion` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `telefono` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `direccion` text COLLATE utf8_spanish_ci NOT NULL
+  `nombre` varchar(100) NOT NULL,
+  `telefono` varchar(15) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `direccion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -63,7 +66,7 @@ CREATE TABLE `configuracion` (
 --
 
 INSERT INTO `configuracion` (`id`, `nombre`, `telefono`, `email`, `direccion`) VALUES
-(1, 'Vida Informático', '925491523', 'angelsifuentes2580@gamil.com', 'Lima');
+(1, 'Sistema de Ventas KL', '925491523', 'info_ventasKL@gamil.com', 'La Ceiba');
 
 -- --------------------------------------------------------
 
@@ -75,7 +78,7 @@ CREATE TABLE `detalle_permisos` (
   `id` int(11) NOT NULL,
   `id_permiso` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_permisos`
@@ -85,7 +88,11 @@ INSERT INTO `detalle_permisos` (`id`, `id_permiso`, `id_usuario`) VALUES
 (8, 3, 2),
 (9, 4, 2),
 (10, 5, 2),
-(11, 6, 2);
+(11, 6, 2),
+(12, 3, 3),
+(13, 4, 3),
+(14, 5, 3),
+(15, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -95,7 +102,7 @@ INSERT INTO `detalle_permisos` (`id`, `id_permiso`, `id_usuario`) VALUES
 
 CREATE TABLE `detalle_temp` (
   `id` int(11) NOT NULL,
-  `id_usuario` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `id_usuario` varchar(50) NOT NULL,
   `id_producto` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio_venta` decimal(10,2) NOT NULL,
@@ -114,7 +121,7 @@ CREATE TABLE `detalle_venta` (
   `id_venta` int(11) NOT NULL,
   `cantidad` int(11) NOT NULL,
   `precio` decimal(10,2) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `detalle_venta`
@@ -123,7 +130,13 @@ CREATE TABLE `detalle_venta` (
 INSERT INTO `detalle_venta` (`id`, `id_producto`, `id_venta`, `cantidad`, `precio`) VALUES
 (1, 4, 1, 2, '13.00'),
 (2, 3, 1, 1, '16.00'),
-(3, 4, 2, 3, '13.00');
+(3, 4, 2, 3, '13.00'),
+(4, 2, 3, 1, '10.00'),
+(5, 3, 4, 2, '16.00'),
+(6, 2, 5, 1, '10.00'),
+(7, 2, 6, 1, '10.00'),
+(8, 2, 7, 1, '10.00'),
+(9, 3, 8, 1, '16.00');
 
 -- --------------------------------------------------------
 
@@ -134,7 +147,7 @@ INSERT INTO `detalle_venta` (`id`, `id_producto`, `id_venta`, `cantidad`, `preci
 CREATE TABLE `permisos` (
   `id` int(11) NOT NULL,
   `nombre` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `permisos`
@@ -156,8 +169,8 @@ INSERT INTO `permisos` (`id`, `nombre`) VALUES
 
 CREATE TABLE `producto` (
   `codproducto` int(11) NOT NULL,
-  `codigo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `descripcion` varchar(200) COLLATE utf8_spanish_ci NOT NULL,
+  `codigo` varchar(20) NOT NULL,
+  `descripcion` varchar(200) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
   `existencia` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
@@ -169,10 +182,10 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`codproducto`, `codigo`, `descripcion`, `precio`, `existencia`, `usuario_id`, `estado`) VALUES
-(2, '321', 'Gaseosa kr', '10.00', 180, 1, 1),
-(3, '654', 'Galletas', '16.00', 8, 1, 1),
+(2, '321', 'Refresco', '10.00', 176, 1, 1),
+(3, '654', 'Galletas', '16.00', 5, 1, 1),
 (4, '987', 'Sandia', '13.00', 55, 1, 1),
-(5, '12345', 'prueba', '1503.00', 50, 0, 1),
+(5, '12345', 'prueba', '1503.00', 50, 0, 0),
 (6, '12345', 'prueba', '1503.00', 50, 0, 0);
 
 -- --------------------------------------------------------
@@ -183,10 +196,10 @@ INSERT INTO `producto` (`codproducto`, `codigo`, `descripcion`, `precio`, `exist
 
 CREATE TABLE `usuario` (
   `idusuario` int(11) NOT NULL,
-  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `correo` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
-  `usuario` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
-  `clave` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `correo` varchar(100) NOT NULL,
+  `usuario` varchar(20) NOT NULL,
+  `clave` varchar(50) NOT NULL,
   `estado` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -195,8 +208,9 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`idusuario`, `nombre`, `correo`, `usuario`, `clave`, `estado`) VALUES
-(1, 'angel sifuentes', 'angelsifuentes2580@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
-(2, 'Vida informatico', 'angel@gmail.com', 'angel', 'f4f068e71e0d87bf0ad51e6214ab84e9', 1);
+(1, 'Kathya', 'kathya@gmail.com', 'admin', '21232f297a57a5a743894a0e4a801fc3', 1),
+(2, 'denis', 'denis@gmail.com', 'denis', 'f4f068e71e0d87bf0ad51e6214ab84e9', 0),
+(3, 'Lilian', 'lilian@gmail.com', 'lilian', '21232f297a57a5a743894a0e4a801fc3', 1);
 
 -- --------------------------------------------------------
 
@@ -210,7 +224,7 @@ CREATE TABLE `ventas` (
   `total` decimal(10,2) NOT NULL,
   `id_usuario` int(11) NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `ventas`
@@ -218,7 +232,13 @@ CREATE TABLE `ventas` (
 
 INSERT INTO `ventas` (`id`, `id_cliente`, `total`, `id_usuario`, `fecha`) VALUES
 (1, 1, '42.00', 1, '2021-05-16 14:35:54'),
-(2, 1, '39.00', 1, '2021-05-16 14:39:39');
+(2, 1, '39.00', 1, '2021-05-16 14:39:39'),
+(3, 1, '10.00', 1, '2023-03-23 06:38:33'),
+(4, 5, '32.00', 1, '2023-03-24 02:57:34'),
+(5, 4, '10.00', 1, '2023-03-24 03:06:25'),
+(6, 4, '10.00', 1, '2023-03-24 03:07:49'),
+(7, 6, '10.00', 1, '2023-03-24 03:18:35'),
+(8, 4, '16.00', 1, '2023-03-24 03:39:27');
 
 --
 -- Índices para tablas volcadas
@@ -286,7 +306,7 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `configuracion`
@@ -298,19 +318,19 @@ ALTER TABLE `configuracion`
 -- AUTO_INCREMENT de la tabla `detalle_permisos`
 --
 ALTER TABLE `detalle_permisos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_temp`
 --
 ALTER TABLE `detalle_temp`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_venta`
 --
 ALTER TABLE `detalle_venta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `permisos`
@@ -328,13 +348,13 @@ ALTER TABLE `producto`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
